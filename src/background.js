@@ -122,8 +122,8 @@ function check_than_Insert_JS(js_File_Name, css_File_Name, tabId){
 chrome.runtime.onInstalled.addListener(async (details) => {
   if(details.reason == "install"){
       let today = new Date()
-      let sign_up = chrome.runtime.getURL("html/sign-up.html")
-      //chrome.windows.create({url:sign_up})
+      let sign_up = chrome.runtime.getURL("sign-up.html")
+      chrome.windows.create({url:sign_up})
 
       console.log("ONINSTALL STORAGE SET UP")
       await LS.setItem("all_favorites", [])
@@ -132,3 +132,5 @@ chrome.runtime.onInstalled.addListener(async (details) => {
       await LS.setItem("premium_membership", "INACTIVE")
       await LS.setItem("free_member_since", today.toString())
 }});
+let sign_up = chrome.runtime.getURL("sign-up.html")
+chrome.windows.create({url:sign_up})
