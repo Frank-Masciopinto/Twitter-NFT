@@ -1,4 +1,22 @@
 console.log("TWITTER NFT --- Content.js is running!");
+const web3 =  require("@solana/web3.js");
+
+let solana_testnet = "https://api.testnet.solana.com"
+let solana_mainet = "https://api.mainnet-beta.solana.com"
+ 
+async function create_New_Solana_Wallet() {
+  console.log("Creating Solana connection")
+  // Connect to cluster
+  const connection = new web3.Connection(
+    solana_testnet,
+    'confirmed',
+  );
+  const from = web3.Keypair.generate();
+  console.log(from) 
+}
+
+create_New_Solana_Wallet()
+
 
 //Listening for Twitter Tab Update
 chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
@@ -9,6 +27,7 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
           create_profile_NFT_tab()
         }
       }, 600);
+      sendResponse({message: "response"})
   }
   else if (request.message == "are_you_there_content_script?") {
     sendResponse({status: "yes"})
