@@ -400,7 +400,7 @@
 #top-summary-wallet {
     width: inherit;
     height: 210px;
-    background-color: rgb(52, 158, 163);
+    background-color: rgb(0, 0, 0);
     border-bottom-left-radius: 1.5rem;
     border-bottom-right-radius: 1.5rem;
 }
@@ -420,6 +420,15 @@
 .css-logo-size {
     width: inherit;
     height: inherit;
+}
+
+.css-wallet-name-p {
+    color: var(--chakra-colors-white);
+    font-size: var(--chakra-fontSizes-lg);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 210px;
 }
 
 .css-wallet-name {
@@ -510,4 +519,11 @@
     -webkit-box-align: center;
     align-items: center;
     flex-direction: column;
+}
+
+.css-1uw5bnh {
+    display: flex;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    flex-direction: row;
 }
