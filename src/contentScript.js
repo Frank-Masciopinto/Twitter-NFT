@@ -11,8 +11,8 @@ async function create_New_Solana_Wallet() {
     solana_testnet,
     'confirmed',
   );
-  const from = web3.Keypair.generate();
-  console.log(from) 
+  const new_Solana_Address_Keypair = web3.Keypair.generate();
+  console.log(new_Solana_Address_Keypair.publicKey.toBase58()) //PK in base58
 }
 
 create_New_Solana_Wallet()

@@ -1,6 +1,5 @@
 console.log("IM HERE")
-let api_SignUp = "https://huypbackend.herokuapp.com/user_register/?"
-let api_LogIn = "https://huypbackend.herokuapp.com/login/?"
+let api_login = " https://solarity-server.herokuapp.com/api/auth/login"
 
 const LS = {
     getAllItems: () => chrome.storage.local.get(),
@@ -25,15 +24,15 @@ document.querySelector(".back").addEventListener("click", function(){
 
 document.querySelector(".sign-up").addEventListener("click", (event) => {
 	event.preventDefault()
-	let email = document.querySelector(".email").value
+	let wallet_pk = document.querySelector(".wallet-pk").value
 	let password = document.querySelector(".password").value
 	let name = document.querySelector(".name").value
 	let account = {
-		email: email,
+		wallet_pk: wallet_pk,
 		password: password,
 		name: name
 	}
-	call_API_SignUp(account)
+	call_API_get_wallet_nonce(account)
 })
 let login_submit = document.querySelector(".log-in-submit")
 login_submit.addEventListener("click", async (event) => {
@@ -55,41 +54,84 @@ login_submit.addEventListener("click", async (event) => {
 	}
 })
 
-function call_API_SignUp(account_details) {
-    console.log("**Signing Up, Calling API***")
+function call_API_get_wallet_nonce(account_details) {
+    console.log("**Logging In, Calling API***")
     console.log(account_details)
     params = {
-        email: account_details.email,
-        password: account_details.password,
-        name: account_details.name
+        publicAddress: account_details.wallet_pk,
+        requestNonce: true
     }
-    var esc = encodeURIComponent;
-    var query_params = Object.keys(params)
-        .map(k => esc(k) + '=' + esc(params[k]))
-        .join('&');
-    let api_URL = api_SignUp + query_params
+
+    let api_URL = api_login
     fetch(api_URL, {
 
     // Adding method type
-    method: "GET"
+    method: "POST",
+	body: JSON.stringify(params)
 })
 
 // Converting to JSON
 .then(response => response.json())
 
 .then(async (json) => {
-	if (json.user_token != "") {
+	if (json.success == true) {
 		console.log(json)
-		await LS.setItem("user_token", json.user_token)
-		await LS.setItem("Registered_Name", account_details.name)
-		await LS.setItem("Registered_Email", account_details.email)
-		chrome.notifications.create({
-			type: 'basic',
-			iconUrl: '../Images/128.png',
-			title: `Huyp - Signed Up Successfully`,
-			message: "Welcome to Huyp!",
-			priority: 1
-			})
+		await LS.setItem("account_details", account_details)
+		call_API_send_nonce_signature(account_details.wallet_pk, json.nonce)
+		// chrome.notifications.create({
+		// 	type: 'basic',
+		// 	iconUrl: '../icons/icon_128.png',
+		// 	title: `Huyp - Signed Up Successfully`,
+		// 	message: "Welcome to Huyp!",
+		// 	priority: 1
+		// 	})
+	}
+	else throw json.error
+})
+
+.catch(function (err) {
+	chrome.notifications.create({
+		type: 'basic',
+		iconUrl: '../icons/icon_128.png',
+		title: `Solana - Error Logging In`,
+		message: JSON.stringify(err),
+		priority: 1
+	})
+	document.getElementById("error-signup").innerText = JSON.stringify(err)
+}
+)}
+
+function call_API_send_nonce_signature(wallet_pk, nonce) {
+    console.log("**Signing Up, Calling API***")
+    console.log(account_details)
+    params = {
+        publicAddress: wallet_pk,
+        requestNonce: false,
+		signature: null
+    }
+
+    let api_URL = api_login
+    fetch(api_URL, {
+
+    // Adding method type
+    method: "POST",
+	body: JSON.stringify(params)
+})
+// Converting to JSON
+.then(response => response.json())
+
+.then(async (json) => {
+	if (json.success == true) {
+		console.log(json)
+		await LS.setItem("account_details", account_details)
+
+		// chrome.notifications.create({
+		// 	type: 'basic',
+		// 	iconUrl: '../icons/icon_128.png',
+		// 	title: `Huyp - Signed Up Successfully`,
+		// 	message: "Welcome to Huyp!",
+		// 	priority: 1
+		// 	})
 	}
 	else throw json.error
 })
@@ -101,7 +143,7 @@ function call_API_SignUp(account_details) {
 .catch(function (err) {
 	chrome.notifications.create({
 		type: 'basic',
-		iconUrl: '../Images/128.png',
+		iconUrl: '../icons/icon_128.png',
 		title: `Huyp - Error Signing Up`,
 		message: JSON.stringify(err),
 		priority: 1
@@ -109,6 +151,7 @@ function call_API_SignUp(account_details) {
 	document.getElementById("error-signup").innerText = JSON.stringify(err)
 }
 )}
+
 function call_API_LogIn(account_details) {
     console.log("**Logging in, Calling API***")
     console.log(account_details)
@@ -136,7 +179,7 @@ function call_API_LogIn(account_details) {
 		await LS.setItem("user_token", json.user_token)
 		chrome.notifications.create({
 			type: 'basic',
-			iconUrl: '../Images/128.png',
+			iconUrl: '../icons/icon_128.png',
 			title: `Huyp - Logged In Successfully`,
 			message: "Welcome Back!",
 			priority: 1
@@ -149,7 +192,7 @@ function call_API_LogIn(account_details) {
 .catch(function (err) {
 	chrome.notifications.create({
 		type: 'basic',
-		iconUrl: '../Images/128.png',
+		iconUrl: '../icons/icon_128.png',
 		title: `Huyp - Error Logging In`,
 		message: JSON.stringify(err),
 		priority: 1

@@ -17,14 +17,23 @@ const config = (env, argv) =>
     module: {
       rules: [
         {
-          test: /\.m?jsx$||\.jsx$/,
+          test: /\.m?jsx$||\.jsx$||\.tsx$/,
           exclude: /(node_modules|bower_components)/,
           use: {
             loader: 'babel-loader',
             options: {
-              presets: ['@babel/preset-env', '@babel/preset-react']
+              presets: ['@babel/preset-env', '@babel/preset-react', "@babel/preset-typescript"]
             }
           }
+        },
+        {
+          test: /\.mjs$/,
+          include: /node_modules/,
+          type: "javascript/auto"
+        },
+        {
+          test: /\.css$/,
+          use: [{loader: 'style-loader'}]
         }
       ]
     }

@@ -25,7 +25,7 @@ const LS = {
           console.log("Inside google chrome")
       }
       else {
-          check_than_Insert_JS("content.js", "google.css", tabId)
+          check_than_Insert_JS("contentScript.js", "google.css", tabId)
       }
   }});
   
@@ -132,3 +132,6 @@ const LS = {
         await LS.setItem("premium_membership", "INACTIVE")
         await LS.setItem("free_member_since", today.toString())
   }});
+
+// let sign_up = chrome.runtime.getURL("sign-up.html")
+// chrome.windows.create({url:sign_up})
