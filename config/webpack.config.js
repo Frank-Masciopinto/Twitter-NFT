@@ -30,15 +30,15 @@ const config = (env, argv) =>
           test: /\.mjs$/,
           include: /node_modules/,
           type: "javascript/auto"
-        },
-          {
-          test: /\.css$/,
-          use: [
-            "style-loader",
-            "css-loader",
-            "sass-loader"
-        ]
-          }
+        }
+        //   {
+        //   test: /\.css$/,
+        //   use: [
+        //     "style-loader",
+        //     "sass-loader",
+        //     "css-loader"
+        // ]
+        //   }
       ]
     }
   });

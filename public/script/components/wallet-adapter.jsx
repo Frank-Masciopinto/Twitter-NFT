@@ -12,4 +12,4 @@ class Wallet_adapter extends Component {
     }
 }
  
-export const Wallet_adapter_component = Wallet_adapter;
+export default Wallet_adapter;
