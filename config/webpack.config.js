@@ -31,10 +31,14 @@ const config = (env, argv) =>
           include: /node_modules/,
           type: "javascript/auto"
         },
-        {
+          {
           test: /\.css$/,
-          use: [{loader: 'style-loader'}]
-        }
+          use: [
+            "style-loader",
+            "css-loader",
+            "sass-loader"
+        ]
+          }
       ]
     }
   });
