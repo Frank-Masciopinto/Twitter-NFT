@@ -17,7 +17,8 @@ class Connect_wallet extends Component {
         getItem: async key => (await chrome.storage.local.get(key))[key],
         setItem: (key, val) => chrome.storage.local.set({[key]: val}),
         removeItems: keys => chrome.storage.local.remove(keys),
-      }
+      },
+      publicKey: "AUtkztdM4ssoCnMBPjRUK8wXR9q7WT5eAepvZkTUPM1"//this.state.LS.getItem("publicKey")  <<<---- use this for saved pk
      } 
   }
     async getProvider () {
@@ -35,7 +36,7 @@ class Connect_wallet extends Component {
             // let signedMessage = await window.solana.signMessage(encodedMessage, "utf8");
 
             console.log(provider.publicKey)
-            chrome.runtime.sendMessage(CE_id, {message: "Nonce Signed Successfully", publicKey: "AUtkztdM4ssoCnMBPjRUK8wXR9q7WT5eAepvZkTUPM1"}, (response_nft_list) => {
+            chrome.runtime.sendMessage(CE_id, {message: "Nonce Signed Successfully", publicKey: this.state.publicKey}, (response_nft_list) => {
               console.log(response_nft_list)
               if (response_nft_list != "No NFTs Found") {//if we have NFTs in list, spawn the images in gallery
                 this.spawn_NFTs_images_in_Twitter_gallery(response_nft_list["nft_List"])
@@ -50,7 +51,8 @@ class Connect_wallet extends Component {
     };
 
     async get_NFTs_from_loggedIn_wallet() {
-      chrome.runtime.sendMessage(CE_id, {message: "Nonce Signed Successfully", publicKey: "AUtkztdM4ssoCnMBPjRUK8wXR9q7WT5eAepvZkTUPM1"}, (response_nft_list) => {
+      console.log("--> get_NFTs_from_loggedIn_wallet()")
+      chrome.runtime.sendMessage(CE_id, {message: "Nonce Signed Successfully", publicKey: this.state.publicKey}, (response_nft_list) => {
         console.log(response_nft_list)
         if (response_nft_list != "No NFTs Found") {//if we have NFTs in list, spawn the images in gallery
           this.spawn_NFTs_images_in_Twitter_gallery(response_nft_list["nft_List"])
