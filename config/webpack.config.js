@@ -1,7 +1,7 @@
 'use strict';
 
 const { merge } = require('webpack-merge');
-
+//const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const common = require('./webpack.common.js');
 const PATHS = require('./paths');
 
@@ -31,14 +31,10 @@ const config = (env, argv) =>
           include: /node_modules/,
           type: "javascript/auto"
         }
-        //   {
-        //   test: /\.css$/,
-        //   use: [
-        //     "style-loader",
-        //     "sass-loader",
-        //     "css-loader"
-        // ]
-        //   }
+        // {
+        //   test: /\.css$/i,
+        //   use: [MiniCssExtractPlugin.loader, "css-loader"],
+        // }
       ]
     }
   });

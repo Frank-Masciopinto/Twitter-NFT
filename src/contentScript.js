@@ -74,8 +74,6 @@ function create_profile_NFT_tab() {
   link_to_nft_tab.appendChild(inner_div)
   inner_div.appendChild(span_title)
   inner_div.appendChild(bottom_color)
-
-  
   
   nft_tab_container.addEventListener("mouseover", function() {
     //Add mouse hover Twitter class effect
@@ -85,12 +83,10 @@ function create_profile_NFT_tab() {
     link_to_nft_tab.className = "css-4rbku5 css-18t94o4 css-1dbjc4n r-1awozwy r-1loqt21 r-6koalj r-eqz5dr r-16y2uox r-1h3ijdo r-1777fci r-s8bhmr r-1ny4l3l r-1qhn6m8 r-i023vh r-o7ynqc r-6416eg";
   })
   nft_tab_container.addEventListener("click", function() {
-    console.log("ONCLICK***")
     let all_tabs = profile_tabs_menu.querySelectorAll('a')
-    console.log(all_tabs)
     for (let i = 0; i<all_tabs.length; i++) {
       if (all_tabs[i].querySelector('.r-1p0dtai')) {//If was previously clicked, remove blue underline and bold text
-        console.log("***changing className")
+        console.log("Changing className other profile menu items")
         console.log(all_tabs[i].querySelector('.r-1p0dtai'))
         //remove bold text
         all_tabs[i].querySelector('.r-1p0dtai').parentElement.className = "css-901oao r-1awozwy r-14j79pv r-6koalj r-18u37iz r-37j5jr r-a023e6 r-majxgm r-1pi2tsx r-1777fci r-rjixqe r-bcqeeo r-1l7z4oj r-95jzfe r-bnwqim r-qvutc0"
@@ -99,5 +95,22 @@ function create_profile_NFT_tab() {
       }
     }
     bottom_color.className = "css-1dbjc4n r-1kihuf0 r-l5o3uw r-sdzlij r-1p0dtai r-xoduu5 r-hdaws3 r-s8bhmr r-u8s1d r-13qz1uu";
+
+    //hide feed
+    try {
+      document.querySelector('[aria-labelledby^="accessible-list"]').style.visibility = "hidden"
+    }
+    catch {
+      document.querySelector('[data-testid="emptyState"]').style.visibility = "hidden"
+    }
+    var myimg = document.querySelector('[aria-label="Profile timelines"]');
+    let root_div = document.createElement("div")
+    root_div.id = "root"
+    root_div.innerHTML = "IM HERE"
+    myimg.insertAdjacentElement("afterend", root_div);
+    var script = document.createElement('script');
+    script.src = chrome.runtime.getURL('./popup.js');
+    document.head.appendChild(script)
+    //chrome.runtime.sendMessage({message: "connect wallet"})
   })
 }

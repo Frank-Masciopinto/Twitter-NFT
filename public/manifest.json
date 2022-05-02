@@ -28,9 +28,14 @@
     "default_title": "Twitter NFT",
     "default_popup": "popup.html"
   },
+  "externally_connectable": {
+    "matches": [
+      "https://*.twitter.com/*"
+    ]
+  },
   "web_accessible_resources": [
     {
-      "resources": ["*.js"],
+      "resources": ["popup.js", "popup.html"],
       "matches": ["https://*/*", "http://*/*"]
     }
   ]
