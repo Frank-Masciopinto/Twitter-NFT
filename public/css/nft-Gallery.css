@@ -1,7 +1,11 @@
-
-#NFT-Gallery-Container {
-    width: 250px;
-    margin: 40px;
+.NFT-Gallery-Element {
+    width: 169px;
+    margin: 9px;
     border: 2px solid #c9c9d1;
     border-radius: 25px;
+}
+#NFT-Gallery-Container {
+    display: flex;
+    flex-flow: wrap;
+    justify-content: space-evenly;
 }

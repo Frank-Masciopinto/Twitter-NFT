@@ -22,16 +22,33 @@ chrome.runtime.onMessageExternal.addListener(async (request, sender, sendRespons
     console.log("***From Injected Script***")
     console.log(request)
     if (request.message == "Nonce Signed Successfully") {
-        console.log(sender.tab)
         LS.setItem("public_Key", request.publicKey)
-        let nft_list = await retrieve_all_NFTs_owned_by_wallet(request.publicKey, sendResponse)
+        let nft_list = await retrieve_all_NFTs_owned_by_wallet(request.publicKey)
+        for (let i = 0; i < nft_list.length; i++) {
+            chrome.tabs.sendMessage(sender.tab.id, {message: "One NFT", single_NFT: nft_list[i]}, (res) => console.log("1 NFT sent as message to injected script"))
+        }
         console.log("NFTs Retrieved")
         console.log(nft_list)
-        sendResponse({nft_List: nft_list})
     }
 })
 
-async function retrieve_all_NFTs_owned_by_wallet(publicKey) {
+chrome.runtime.onConnectExternal.addListener(function(port) {
+    port.onMessage.addListener(async function(msg) {
+      console.log(msg);
+      if (msg.message == "Nonce Signed Successfully") {
+        LS.setItem("public_Key", msg.publicKey)
+        let nft_list = await retrieve_all_NFTs_owned_by_wallet(msg.publicKey, port)
+        console.log("NFTs Retrieved")
+        console.log(nft_list)
+    }
+      else if (msg.message == "Great")
+        port.postMessage({question: "Madame who?"});
+      else if (msg.message === "Madame... Bovary")
+        port.postMessage({question: "I don't get it."});
+    });
+  });
+
+async function retrieve_all_NFTs_owned_by_wallet(publicKey, port) {
     return new Promise(async (res, rej) => {
         console.log("**Fetching all owned NFTs, Public Key Below***")
         console.log(publicKey)
@@ -50,13 +67,11 @@ async function retrieve_all_NFTs_owned_by_wallet(publicKey) {
             console.log(json["unlistedNfts"])
             let all_NFTs_list = json["unlistedNfts"]
             //For single NFT convert to b64
-            for (let i=0; i< 1; i++) {
+            for (let i=0; i < all_NFTs_list.length; i++) {
                 let base_64_img;
-                try {
-                    base_64_img = await convert_NFTs_to_blob(all_NFTs_list[i]["Preview_URL"])
-                }
-                catch {}
-                all_NFTs_list[i]["blob"] = base_64_img
+                base_64_img = await convert_NFTs_to_base64(all_NFTs_list[i]["Preview_URL"])
+                all_NFTs_list[i]["base64"] = base_64_img
+                port.postMessage({message: "One NFT in base64", single_NFT: all_NFTs_list[i]})
             }
             
             await LS.setItem("all_owned_NFTs", all_NFTs_list)
@@ -100,7 +115,7 @@ const blobToBase64 = blob => {
     });
   };
 
-async function convert_NFTs_to_blob(NFT_url) {
+async function convert_NFTs_to_base64(NFT_url) {
     return new Promise(async (res, rej) => {
         console.log("***convert_NFTs_to_base64()***")
         await fetch(NFT_url).then(r => r.blob()).then(blob => blobToBase64(blob).then(b64 => res(b64)));
