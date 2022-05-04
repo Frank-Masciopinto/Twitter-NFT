@@ -6,7 +6,6 @@ let nonce_for_login = 666
 class Connect_wallet extends Component {
   constructor(){
     super()
-    this.spawn_NFTs_images_in_Twitter_gallery = this.spawn_NFTs_images_in_Twitter_gallery.bind(this);
     this.getProvider = this.getProvider.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
     //this.listen_for_messages = this.listen_for_messages.bind(this);
@@ -17,31 +16,74 @@ class Connect_wallet extends Component {
   }
 
   async open_port_to_backgroundScript_retrieve_all_NFTs() {
+    console.log("open_port_to_backgroundScript_retrieve_all_NFTs()")
     var port = chrome.runtime.connect(this.state.CE_id);
     port.postMessage({message: "Nonce Signed Successfully", publicKey: this.state.publicKey})
     port.onMessage.addListener(function(msg) {
       console.log(msg)
-      if (msg.message == "One NFT in base64")
+      if (msg.message == "One NFT in base64") {
         if (!document.querySelector("#NFT-Gallery-Container")) {
           create_NFTs_Gallery_container()
         } 
         spawn_one_nft_img(msg.single_NFT)
+      }
     });
 
-    async function spawn_one_nft_img (nft_image) {
+    async function spawn_one_nft_img (nft_obj) {
       console.log("spawn_one_nft_img()")
       return new Promise((res, rej) => {
         let nft_gallery_div = document.getElementById("NFT-Gallery-Container")
+        //Create NFT Container to display img, title & all infos
+        let nft_container = document.createElement("div")
+        nft_container.className = "single-nft-container"
+        //Create Img
         let nft_img_element = document.createElement("img")
         nft_img_element.className = "NFT-Gallery-Element"
-        nft_img_element.src = nft_image["base64"]
-        nft_gallery_div.appendChild(nft_img_element)
+        nft_img_element.src = nft_obj["base64"]
+        nft_img_element.href = nft_obj["external_url"]
+        nft_img_element.onclick = function() {
+          window.location.href = nft_obj["Properties"]["external_url"];
+      };
+        nft_container.appendChild(nft_img_element)
+        //Create Title
+        let nft_title = document.createElement("h2")
+        nft_title.innerText = nft_obj["Title"]
+        nft_title.className = "NFT-title"
+        nft_container.appendChild(nft_title)
+        //Create Collection Name
+        let collection_name = document.createElement("p")
+        collection_name.innerText = nft_obj["nft_collection"]["title"]
+        collection_name.className = "NFT-collection-name underlined-pointer-cursor"
+        collection_name.onclick = function() {
+          window.location.href = nft_obj["Properties"]["external_url"];
+      };
+        nft_container.appendChild(collection_name)
+        //Create Twitter + Discord Buttons
+        let buttons_nft_container = document.createElement("div")
+        buttons_nft_container.className = "buttons_nft_container"
+        let twitter_btn = document.createElement("a")
+        twitter_btn.className = "twitter-nft-btn"
+        twitter_btn.href = nft_obj["nft_collection"]["twitter"]
+        twitter_btn.innerText = "Twitter"
+        let discord_btn = document.createElement("a")
+        discord_btn.className = "discord-nft-btn"
+        discord_btn.href = "https://" + nft_obj["nft_collection"]["discord"]
+        discord_btn.innerText = "Discord"
+        
+        buttons_nft_container.appendChild(twitter_btn)
+        buttons_nft_container.appendChild(discord_btn)
+        nft_container.appendChild(buttons_nft_container)
+        //Create
+
+        nft_gallery_div.appendChild(nft_container)
         res()
       })
     }
     function create_NFTs_Gallery_container() {
       console.log("create_NFTs_Gallery_container()")
-      document.getElementById("connect-solana-wallet").remove()
+      if (document.querySelector("#connect-solana-wallet")) {
+        document.getElementById("connect-solana-wallet").remove()
+      }
       let nft_gallery_div = document.createElement("div")
       nft_gallery_div.id = "NFT-Gallery-Container"
       document.getElementById("root").appendChild(nft_gallery_div)
@@ -69,39 +111,22 @@ class Connect_wallet extends Component {
       }
   };
 
-  async get_NFTs_from_loggedIn_wallet() {
-    console.log("--> get_NFTs_from_loggedIn_wallet()")
-    chrome.runtime.sendMessage(this.state.CE_id, {message: "Nonce Signed Successfully", publicKey: this.state.publicKey}, (response_nft_list) => {
-      console.log(response_nft_list)
-      if (response_nft_list != "No NFTs Found") {//if we have NFTs in list, spawn the images in gallery
-        this.spawn_NFTs_images_in_Twitter_gallery(response_nft_list["nft_List"])
-      }
-    })
-  }
-
   async sendMessage(messageToExtension) {
     return new Promise((res, rej) => {
       chrome.runtime.sendMessage(this.state.CE_id, {message: messageToExtension}, (response) => {res(response)})
     })
   }
 
-  async spawn_NFTs_images_in_Twitter_gallery (NFTs_List) {
-      console.log(NFTs_List.length)
-      for (let i=0; i < NFTs_List.length; i++) {
-        console.log("Inside loop")
-        await this.spawn_one_nft_img(NFTs_List[i])
-      }
-  }
-
     render() { 
-      if (this.publicKey == null) { //if never logged in before, connect wallet
+      if (this.state.publicKey == null) { //if never logged in before, connect wallet to fetch pk
         return (
             <button id='connect-solana-wallet' onClick={this.getProvider}>Connect Your Solana Wallet</button>
         );
       }
       else {
+        this.open_port_to_backgroundScript_retrieve_all_NFTs()
         return (
-            <button id='connect-solana-wallet' onClick={this.getProvider}>Already Connected</button>
+          <div id='NFT-Gallery-Container'></div>
       );
       }
     }

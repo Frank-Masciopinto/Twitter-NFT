@@ -8,7 +8,5 @@ import Connect2Phantom from '../public/script/web3_components/connect_wallet.tsx
 
 const root = ReactDOMClient.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
     <Connect_wallet />
-  </React.StrictMode>
 );

@@ -1,11 +1,73 @@
+.underlined-pointer-cursor {
+    text-decoration: underline;
+}
+
+.underlined-pointer-cursor:hover {
+    cursor: pointer;
+}
+
 .NFT-Gallery-Element {
     width: 169px;
-    margin: 9px;
+    margin: 5px;
     border: 2px solid #c9c9d1;
     border-radius: 25px;
+}
+.NFT-Gallery-Element:hover {
+    cursor: pointer;
 }
 #NFT-Gallery-Container {
     display: flex;
     flex-flow: wrap;
     justify-content: space-evenly;
+}
+
+.single-nft-container {
+    border: 2px solid #c9c9d1;
+    border-radius: 25px;
+    text-align: center;
+    background: lightgray;
+    height: fit-content;
+    margin: 5px;
+}
+
+.NFT-title {
+    color: grey;
+    margin: inherit;
+    font-size: larger;
+}
+
+.NFT-collection-name {
+    color: #1d9bf0;
+    margin: inherit;
+    font-size: larger;
+    text-decoration:underline;
+    margin-bottom: 14px;
+}
+
+.twitter-nft-btn {
+    color: white;
+    width: 40%;
+    height: 28px;
+    margin: 6px;
+    border-radius: 25px;
+    border: 1px;
+    background-color: #1d9bf0;
+    padding: 8px;
+    text-decoration: none;
+}
+
+.discord-nft-btn {
+    width: 40%;
+    height: 28px;
+    margin: 6px;
+    border-radius: 25px;
+    border: 1px;
+    background-color: #777d81;
+    padding: 8px;
+    text-decoration: none;
+    color: white;
+}
+
+.buttons-nft-container {
+    margin-bottom: 8px;
 }
