@@ -15,7 +15,7 @@ async function create_New_Solana_Wallet() {
   console.log(new_Solana_Address_Keypair.publicKey.toBase58()) //PK in base58
 }
 
-create_New_Solana_Wallet()
+//create_New_Solana_Wallet()
 
 
 //Listening for Twitter Tab Update
@@ -40,7 +40,7 @@ window.addEventListener('load', (event) => {
   if (document.querySelector('meta[content="profile"]') && !document.querySelector("#my-nft-tab")) {//If Profile Page is open
       create_profile_NFT_tab()
     }
-  }, 600);
+  }, 200);
 });
 //Creating new tab button for profile Tab Menu
 function create_profile_NFT_tab() {

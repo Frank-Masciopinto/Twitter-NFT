@@ -6,6 +6,11 @@
     cursor: pointer;
 }
 
+#twitter-icon {
+    position: inherit;
+    margin-bottom: -6px;
+}
+
 .NFT-Gallery-Element {
     width: 169px;
     margin: 5px;
@@ -70,4 +75,35 @@
 
 .buttons-nft-container {
     margin-bottom: 8px;
+}
+#connect-solana-wallet:hover {
+    opacity: .6;
+  }  
+
+#connect-solana-wallet {
+    margin: auto;
+    background-color: initial;
+    background-image: linear-gradient(#8614f8 0, #760be0 100%);
+    border-radius: 5px;
+    border-style: none;
+    box-shadow: rgba(245, 244, 247, .25) 0 1px 1px inset;
+    color: #fff;
+    cursor: pointer;
+    margin-top: 30px;
+    display: block;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    height: 60px;
+    line-height: 60px;
+    outline: 0;
+    text-align: center;
+    transition: all .3s cubic-bezier(.05, .03, .35, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: 190px;
+    width: auto;
+    padding-left: 20px;
+    padding-right: 20px;
 }
