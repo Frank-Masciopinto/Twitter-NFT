@@ -230,9 +230,9 @@ chrome.tabs.sendMessage(tabId, {message: content_Message}, function(msg) {
 
 chrome.runtime.onInstalled.addListener(async (details) => {
 if(details.reason == "install"){
-    let today = new Date()
-    let sign_up = chrome.runtime.getURL("popup.html")
-    chrome.windows.create({url:sign_up})
+    // let today = new Date()
+    // let sign_up = chrome.runtime.getURL("popup.html")
+    // chrome.windows.create({url:sign_up})
 
     console.log("ONINSTALL STORAGE SET UP")
     await LS.setItem("all_favorites", [])
