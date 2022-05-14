@@ -9,6 +9,8 @@ const PATHS = require('./paths');
 const config = (env, argv) =>
   merge(common, {
     entry: {
+      display_nft_Gallery: PATHS.src + '/display_nft_Gallery.js',
+      display_nft_floor_price: PATHS.src + '/display_nft_floor_price.js',
       popup: PATHS.src + '/popup.js',
       contentScript: PATHS.src + '/contentScript.js',
       background: PATHS.src + '/background.js',

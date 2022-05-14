@@ -13,9 +13,9 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
         console.log(sender.tab)
         chrome.scripting.executeScript({
             target: {tabId: sender.tab.id},
-            files: ["./popup.js"]
+            files: ["./display_nft_Gallery.js"]
         });
-        sendResponse({response: "Injected popup.js"})
+        sendResponse({response: "Injected display_nft_Gallery.js"})
     }
 })
 chrome.runtime.onMessageExternal.addListener(async (request, sender, sendResponse) => {

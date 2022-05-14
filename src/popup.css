@@ -90,3 +90,10 @@ code {
   border: 0.5px dashed #000;
   opacity: 0.1;
 }
+a.twitter-nft-btn:hover {
+  opacity: 0.8;
+}
+
+#NFT-Gallery-Container {
+  padding-left: 0px;
+}

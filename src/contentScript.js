@@ -27,6 +27,17 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
           create_profile_NFT_tab()
         }
       }, 600);
+      if (document.querySelector('[data-testid="sidebarColumn"]') && !document.querySelector(".display_nft_floor_price_js")) {
+        console.log("---INJECTING SCRIPT FOR FLOOR PRICE TAB---")
+        //create container for NFTs price changes
+        let main_div_floor_price = document.createElement("div")
+        main_div_floor_price.className = "floor-price-main-tab"
+
+        let you_might_like_right_col_div = document.querySelector('[aria-label="Who to follow"]')
+        you_might_like_right_col_div.parentElement.parentElement.prepend(main_div_floor_price)
+
+        create_NFTs_floor_price_tab()
+      }
       sendResponse({message: "response"})
   }
   else if (request.message == "are_you_there_content_script?") {
@@ -103,14 +114,21 @@ function create_profile_NFT_tab() {
     catch {
       document.querySelector('[data-testid="emptyState"]').style.visibility = "hidden"
     }
-    var myimg = document.querySelector('[aria-label="Profile timelines"]');
+    var profile_menu = document.querySelector('[aria-label="Profile timelines"]');
     let root_div = document.createElement("div")
     root_div.id = "root"
     root_div.innerHTML = "IM HERE"
-    myimg.insertAdjacentElement("afterend", root_div);
+    profile_menu.insertAdjacentElement("afterend", root_div);
     var script = document.createElement('script');
-    script.src = chrome.runtime.getURL('./popup.js');
+    script.src = chrome.runtime.getURL('./display_nft_Gallery.js');
     document.head.appendChild(script)
     //chrome.runtime.sendMessage({message: "connect wallet"})
   })
+}
+
+function create_NFTs_floor_price_tab() {
+  var script = document.createElement('script');
+  script.className = "display_nft_floor_price_js"
+  script.src = chrome.runtime.getURL('./display_nft_floor_price.js');
+  document.head.appendChild(script)
 }

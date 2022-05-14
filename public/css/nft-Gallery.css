@@ -23,14 +23,17 @@
 #NFT-Gallery-Container {
     display: flex;
     flex-flow: wrap;
+    padding-left: 0px;
     justify-content: space-evenly;
 }
 
 .single-nft-container {
-    border: 2px solid #c9c9d1;
-    border-radius: 25px;
+    width: 183px !important;
+    height: 273px !important;
+    border: 2px solid #000000;
+    border-radius: 10px;
     text-align: center;
-    background: lightgray;
+    background: rgb(0, 0, 0);
     height: fit-content;
     margin: 5px;
 }
@@ -38,13 +41,13 @@
 .NFT-title {
     color: grey;
     margin: inherit;
-    font-size: larger;
+    font-size: 1.5vh;
 }
 
 .NFT-collection-name {
     color: #1d9bf0;
     margin: inherit;
-    font-size: larger;
+    font-size: 1.5vmin !important;
     text-decoration:underline;
     margin-bottom: 14px;
 }
@@ -107,3 +110,4 @@
     padding-left: 20px;
     padding-right: 20px;
 }
+

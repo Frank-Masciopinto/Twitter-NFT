@@ -7,7 +7,7 @@ import * as ReactDOMClient from 'react-dom/client';
 let nonce_for_login = 666
 let CE_id= "llppbgmmjainigmgopfnbddgmjjfgocc"
 
-class Connect_wallet extends Component {
+class Display_nft_gallery extends Component {
   constructor(){
     super()
     this.get_pubKey_from_wallet = this.get_pubKey_from_wallet.bind(this);
@@ -15,7 +15,7 @@ class Connect_wallet extends Component {
     this.ask_pub_key_to_bgScript = this.ask_pub_key_to_bgScript.bind(this);
     //this.listen_for_messages = this.listen_for_messages.bind(this);
     this.state = { 
-      publicKey: "8asRqCcgpkzJbenffHcufwDBq1ZSvZEqg3GH91FpGzFw", //undefined
+      publicKey: undefined,
       port: chrome.runtime.connect(CE_id),
       nft_list: []
     } 
@@ -106,5 +106,5 @@ class Connect_wallet extends Component {
     }
 }
  
-export default Connect_wallet;
+export default Display_nft_gallery;
 
