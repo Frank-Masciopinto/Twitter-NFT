@@ -1,7 +1,16 @@
 .floor-price-main-tab {
     width: inherit;
-    background: #f7f9f9;
     height: 500px;
     position: inherit;
+    margin-top: 52px;
+    background: rgb(247, 249, 249);
     border-radius: 17px;
+}
+
+.sidebar-NFT-Title {
+    color: black;
+    font-family: inherit;
+    font-size: 19px;
+    margin-left: 14px;
+    font-weight: 800;
 }

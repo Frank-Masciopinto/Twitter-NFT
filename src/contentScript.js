@@ -23,10 +23,12 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
   console.log(request)
   if (request.message == "Changed Linkedin URL") {
     setTimeout(() => {
-      if (document.querySelector('meta[content="profile"]') && !document.querySelector("#my-nft-tab")) {//If Profile Page is open
-          create_profile_NFT_tab()
+      let visiting_username = document.querySelector("title").innerText.match(/(?<=\(@).*(?=\))/)[0]
+      let your_own_username = document.querySelector('[aria-label="Account menu"]').innerText.match(/(?<=@).*/)[0]
+      if (document.querySelector('meta[content="profile"]') && !document.querySelector("#my-nft-tab") && visiting_username == your_own_username) {//If Profile Page is open
+              create_profile_NFT_tab()
         }
-      }, 600);
+      }, 800);
       if (document.querySelector('[data-testid="sidebarColumn"]') && !document.querySelector(".display_nft_floor_price_js")) {
         console.log("---INJECTING SCRIPT FOR FLOOR PRICE TAB---")
         //create container for NFTs price changes
@@ -48,10 +50,13 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
 window.addEventListener('load', (event) => {
   console.log("onLoad")
   setTimeout(() => {
-  if (document.querySelector('meta[content="profile"]') && !document.querySelector("#my-nft-tab")) {//If Profile Page is open
-      create_profile_NFT_tab()
+  let visiting_username = document.querySelector("title").innerText.match(/(?<=\(@).*(?=\))/)[0]
+  let your_own_username = document.querySelector('[aria-label="Account menu"]').innerText.match(/(?<=@).*/)[0]
+  if (document.querySelector('meta[content="profile"]') && !document.querySelector("#my-nft-tab") && visiting_username == your_own_username) {//If Profile Page is open
+    console.log("CREATING MY NFT TAB")  
+    create_profile_NFT_tab()
     }
-  }, 200);
+  }, 800);
 });
 //Creating new tab button for profile Tab Menu
 function create_profile_NFT_tab() {
