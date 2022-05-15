@@ -6,6 +6,11 @@ const LS = {
   };
 
 let API_retrieve_all_NFTs_from_wallet = "https://api.all.art/v1/wallet/"
+let API_Cryptoslam_top100_24hr = "https://api.cryptoslam.io/v1/collections/top-100?timeRange=day"
+
+
+let API_Ubiquity_Key = "bd1b4RykxN4nmPQr35FAKaMJd4yBRowHXKUbhUdtdCyACc3"
+
 
 chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
     console.log(request)
@@ -30,13 +35,16 @@ chrome.runtime.onMessageExternal.addListener(async (request, sender, sendRespons
 
 chrome.runtime.onConnectExternal.addListener(function(port) {
     port.onMessage.addListener(async function(msg) {
-      console.log(msg);
-      if (msg.message == "Nonce Signed Successfully") {
-        await LS.setItem("public_Key", msg.publicKey)
-        let nft_list = await retrieve_all_NFTs_owned_by_wallet(msg.publicKey, port)
-        console.log("NFTs Retrieved")
-        console.log(nft_list)
-    }
+        console.log(msg);
+        if (msg.message == "Nonce Signed Successfully") {
+            await LS.setItem("public_Key", msg.publicKey)
+            let nft_list = await retrieve_all_NFTs_owned_by_wallet(msg.publicKey, port)
+            console.log("NFTs Retrieved")
+            console.log(nft_list)
+        }
+        else if (msg.message == "Retrieve NFT Market Info") {
+            retrieve_ETH_Market_Info(port)
+        }
     });
   });
 
@@ -80,6 +88,46 @@ async function retrieve_all_NFTs_owned_by_wallet(publicKey, port) {
                 })
             res("No NFTs Found")
         }
+    })
+    
+    .catch(function (err) {
+        console.log(err)
+        chrome.notifications.create({
+            type: 'basic',
+            iconUrl: './icons/icon_128.png',
+            title: `Solana - Error`,
+            message: JSON.stringify(err),
+            priority: 1
+        })
+        res("No NFTs Found")
+    })
+})
+}
+
+async function retrieve_ETH_Market_Info(port) {
+    return new Promise(async (res, rej) => {
+        console.log("Retrieve_ETH_Market_Info()")
+        let api_URL = API_Cryptoslam_top100_24hr
+    
+        fetch(api_URL, {
+    
+        // Adding method type
+        method: "GET",
+    })
+    // Converting to JSON
+    .then(response => response.json())
+    
+    .then(async (json) => {
+        console.log("Received collections:")
+        console.log(json.length)
+        let marketData_top20 = json.slice(0,7)  
+        for (let i=0; i < marketData_top20.length; i++) {
+            let base_64_icon = await convert_NFTs_to_base64(marketData_top20[i]["iconUrl"])
+            marketData_top20[i]["base64"] = base_64_icon
+        }
+        port.postMessage({message: "Market Data", market_Data: marketData_top20})
+        res(marketData_top20)
+
     })
     
     .catch(function (err) {

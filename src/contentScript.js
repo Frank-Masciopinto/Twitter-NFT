@@ -22,14 +22,18 @@ async function create_New_Solana_Wallet() {
 chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
   console.log(request)
   if (request.message == "Changed Linkedin URL") {
-    setTimeout(() => {
-      let visiting_username = document.querySelector("title").innerText.match(/(?<=\(@).*(?=\))/)[0]
-      let your_own_username = document.querySelector('[aria-label="Account menu"]').innerText.match(/(?<=@).*/)[0]
-      if (document.querySelector('meta[content="profile"]') && !document.querySelector("#my-nft-tab") && visiting_username == your_own_username) {//If Profile Page is open
-              create_profile_NFT_tab()
-        }
-      }, 800);
-      if (document.querySelector('[data-testid="sidebarColumn"]') && !document.querySelector(".display_nft_floor_price_js")) {
+    setInterval(() => {
+      if(document.querySelector("title").innerText.match(/(?<=\(@).*(?=\))/)) {
+        let visiting_username = document.querySelector("title").innerText.match(/(?<=\(@).*(?=\))/)[0]
+        let your_own_username = document.querySelector('[aria-label="Account menu"]').innerText.match(/(?<=@).*/)[0]
+        clearInterval()
+        if (document.querySelector('meta[content="profile"]') && !document.querySelector("#my-nft-tab") && visiting_username == your_own_username) {//If Profile Page is open
+          console.log("CREATING MY NFT TAB")  
+          create_profile_NFT_tab()
+          }
+      }
+    }, 100);
+      if (document.querySelector('[data-testid="sidebarColumn"]') && !document.querySelector(".floor-price-main-tab")) {
         console.log("---INJECTING SCRIPT FOR FLOOR PRICE TAB---")
         //create container for NFTs price changes
         let main_div_floor_price = document.createElement("div")
@@ -49,14 +53,17 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
 
 window.addEventListener('load', (event) => {
   console.log("onLoad")
-  setTimeout(() => {
-  let visiting_username = document.querySelector("title").innerText.match(/(?<=\(@).*(?=\))/)[0]
-  let your_own_username = document.querySelector('[aria-label="Account menu"]').innerText.match(/(?<=@).*/)[0]
-  if (document.querySelector('meta[content="profile"]') && !document.querySelector("#my-nft-tab") && visiting_username == your_own_username) {//If Profile Page is open
-    console.log("CREATING MY NFT TAB")  
-    create_profile_NFT_tab()
+  setInterval(() => {
+    if(document.querySelector("title").innerText.match(/(?<=\(@).*(?=\))/)) {
+      let visiting_username = document.querySelector("title").innerText.match(/(?<=\(@).*(?=\))/)[0]
+      let your_own_username = document.querySelector('[aria-label="Account menu"]').innerText.match(/(?<=@).*/)[0]
+      clearInterval()
+      if (document.querySelector('meta[content="profile"]') && !document.querySelector("#my-nft-tab") && visiting_username == your_own_username) {//If Profile Page is open
+        console.log("CREATING MY NFT TAB")  
+        create_profile_NFT_tab()
+        }
     }
-  }, 800);
+  }, 100);
 });
 //Creating new tab button for profile Tab Menu
 function create_profile_NFT_tab() {
