@@ -287,5 +287,4 @@ if(details.reason == "install"){
     await LS.setItem("free_membership", "ACTIVE")
     await LS.setItem("is_injected_capture_screen", false)
     await LS.setItem("premium_membership", "INACTIVE")
-    await LS.setItem("free_member_since", today.toString())
 }});

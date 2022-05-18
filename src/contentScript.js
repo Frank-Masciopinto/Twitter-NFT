@@ -30,6 +30,7 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
         if (document.querySelector('meta[content="profile"]') && !document.querySelector("#my-nft-tab") && visiting_username == your_own_username) {//If Profile Page is open
           console.log("CREATING MY NFT TAB")  
           create_profile_NFT_tab()
+          create_Hexagon_NFT_Profile_Picture()
           }
       }
     }, 100);
@@ -61,10 +62,26 @@ window.addEventListener('load', (event) => {
       if (document.querySelector('meta[content="profile"]') && !document.querySelector("#my-nft-tab") && visiting_username == your_own_username) {//If Profile Page is open
         console.log("CREATING MY NFT TAB")  
         create_profile_NFT_tab()
+        create_Hexagon_NFT_Profile_Picture()
         }
     }
   }, 100);
 });
+
+function create_Hexagon_NFT_Profile_Picture() {
+  console.log("create_Hexagon_NFT_Profile_Picture()")
+  let profile_pic_container = document.querySelector('a[href="/settings/profile"]').parentElement.parentElement
+  let new_profile_pic = document.createElement("div")
+  new_profile_pic.className = "new_profile_pic_container"
+  profile_pic_container.appendChild(new_profile_pic)
+  var script = document.createElement('script');
+  script.className = "hex_profile_pic_js"
+  script.src = chrome.runtime.getURL('./hex_profile_pic.js');
+  document.head.appendChild(script)
+  
+
+}
+
 //Creating new tab button for profile Tab Menu
 function create_profile_NFT_tab() {
   console.log("Creating new tab My NFT")
