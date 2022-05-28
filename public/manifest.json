@@ -5,7 +5,7 @@
   "manifest_version": 3,
   "content_scripts": [{
     "matches": [ "*://twitter.com/*" ],
-    "css": ["css/nft-Gallery.css", "css/hexagonal_profile_pic.css", "css/floor-price-tab.css"],
+    "css": ["css/nft-Gallery.css", "css/floor-price-tab.css", "css/hexagonal_pic.css"],
     "js": [ "contentScript.js" ],
     "run_at": "document_idle",
     "all_frames": true
@@ -34,9 +34,10 @@
       "https://*.twitter.com/*"
     ]
   },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqhFFWovhg8c3MdXUUKPti4PNJXT37fal07CfZ+G5G8sK0ndjxpnTipg5DgvcSqyFjZw85jmozCLbr0+fZ0f1ZXfodpSUhr18ar4k8LaccZnDAFcv3aU3XAzAJbF+EW5bCavOGtikpaAbHjrv06GOUZzvlp2YaUgcIZaN74mAH/Edm9IFhaROHUcR4LOkZR6TIs20VBmQMIQp6f8gc+43sFBCOzP85pynSai/MQ2YyPz5D/izPnwbKAioGGh+XKdpH7CXqOxp2Fcw5VF6DKmA7fUpyfPllUhXbteQ3dhE631Rn6kqewbLRPpvXvCXUrDwTDxvdM9INI2KQ+f0uhoHHwIDAQAB",
   "web_accessible_resources": [
     {
-      "resources": ["display_nft_Gallery.js", "hex_profile_pic.js", "display_nft_floor_price.js", "popup.html"],
+      "resources": ["display_nft_Gallery.js", "display_nft_floor_price.js", "append_hex_image.js", "append_hex_tweet_image.js", "popup.html"],
       "matches": ["https://*/*", "http://*/*"]
     }
   ]

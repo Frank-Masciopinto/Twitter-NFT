@@ -19,9 +19,10 @@ import MyWallet from "./MyWallet.tsx";
 function App() {
     // Can be set to 'devnet', 'testnet', or 'mainnet-beta'
     const network = WalletAdapterNetwork.Testnet;
-    
+    console.log("NETWORK", network)
     // You can also provide a custom RPC endpoint
     const endpoint = React.useMemo(() => clusterApiUrl(network), [network]);
+    console.log("ENDPOINT", endpoint)
   
     // @solana/wallet-adapter-wallets includes all the adapters but supports tree shaking --
     // Only the wallets you configure here will be compiled into your application

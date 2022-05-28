@@ -8,9 +8,15 @@ const PATHS = require('./paths');
 // Merge webpack configuration files
 const config = (env, argv) =>
   merge(common, {
+    devServer:{
+      host: '0.0.0.0',
+      port: 8002,
+    },
     entry: {
       display_nft_Gallery: PATHS.src + '/display_nft_Gallery.js',
       display_nft_floor_price: PATHS.src + '/display_nft_floor_price.js',
+      append_hex_image: PATHS.src + '/append_hex_image.js',
+      append_hex_tweet_image: PATHS.src + '/append_hex_tweet_image.js',
       popup: PATHS.src + '/popup.js',
       contentScript: PATHS.src + '/contentScript.js',
       background: PATHS.src + '/background.js',

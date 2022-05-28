@@ -1,0 +1,100 @@
+.twitter-hex-container{
+    max-width: 135px;
+    position: relative;
+    margin-top: -15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.ce_avatar_image {
+    width: 50%;
+    max-width: 100px;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    left: 50%;
+}
+
+.customPopup {
+    z-index: 11111111;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: transparent;
+    height: 100%;
+    width: 100%;
+}
+.popupContent {
+    max-width: 500px;
+    margin: 0 auto;
+    margin-top: 100px;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.5);
+    max-height: 200px;
+    overflow: auto;
+}
+.imgThumbs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.thumbImage {
+    width: 24%;
+    max-width: 100%;
+    border: 1px solid #ddd;
+    margin-bottom: 1%;
+}
+
+.loader {
+  border: 5px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 5px solid #3498db;
+  width: 35px;
+  height: 35px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+  position: absolute;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.twitter-profile-hex-container {
+    margin-top: 0%;
+}
+.tweet_loader{
+    width: 10px !important;
+    height: 10px !important;
+    position: absolute;
+    top: 24%;
+    left: 25%;
+}
+.svg_overflow{
+    overflow:visible;
+}
+.popupContent {position: relative;}
+.closeBtn {
+    position: absolute;
+    height: 17px;
+    width: 17px;
+    text-align: center;
+    border: 1px solid #ffffff;
+    border-radius: 100%;
+    cursor: pointer;
+    right: 0px;
+    top: 0px;
+    font-weight: 900;
+    color: #ffffff;
+    line-height: 15px;
+    background: #349bf0;
+}

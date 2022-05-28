@@ -16,6 +16,7 @@ const MyWallet: React.FC = () => {
     let walletAddress = "";
 
     const wallet = useWallet();
+    console.log("WAL", wallet)
     if (wallet.connected && wallet.publicKey) {
         walletAddress = wallet.publicKey.toString()
     }
@@ -32,6 +33,7 @@ const MyWallet: React.FC = () => {
                 lamports: LAMPORTS_PER_SOL / 100,
             })
         );
+        console.log("TRANSAC", transaction);
         try {
             setBtnLoading(true);
             const signature = await wallet.sendTransaction(transaction, connection);
